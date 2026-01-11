@@ -1,6 +1,6 @@
 import { Handle, Position, NodeProps } from 'reactflow'
 import clsx from 'clsx'
-import { Image, Video, Loader2 } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 
 export function CanvasNode({ data }: NodeProps) {
   const nodeType = data.type || 'effect'

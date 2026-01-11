@@ -12,7 +12,7 @@ export function VideoCanvas({ className }: VideoCanvasProps) {
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   
-  const { canvasElements, selectedCanvasElementId, updateCanvasElement, selectCanvasElement, playhead } = useEditorStore()
+  const { canvasElements, selectedCanvasElementId, updateCanvasElement, selectCanvasElement } = useEditorStore()
   const [zoom, setZoom] = useState(1)
   const [panning, setPanning] = useState(false)
   const [lastPanPoint, setLastPanPoint] = useState<{ x: number; y: number } | null>(null)
@@ -105,12 +105,6 @@ export function VideoCanvas({ className }: VideoCanvasProps) {
     if (!canvas) return
 
     const currentObjects = canvas.getObjects()
-    const currentElementIds = new Set(
-      currentObjects
-        .map((obj) => (obj as any).elementId)
-        .filter((id) => id !== undefined)
-    )
-
     // Remove objects that no longer exist in state
     currentObjects.forEach((obj) => {
       const elementId = (obj as any).elementId
@@ -239,7 +233,6 @@ export function VideoCanvas({ className }: VideoCanvasProps) {
 
   const handleZoomIn = () => setZoom((z) => Math.min(z * 1.2, 5))
   const handleZoomOut = () => setZoom((z) => Math.max(z / 1.2, 0.1))
-  const handleResetZoom = () => setZoom(1)
   const handleFitToScreen = () => {
     setZoom(1)
     const canvas = fabricCanvasRef.current
