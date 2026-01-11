@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-flick-primary font-sans antialiased;
+    color: theme('colors.flick.text');
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  * {
+    border-color: theme('colors.flick.border');
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .timeline-track {
+    border-bottom: 1px solid theme('colors.flick.border');
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .timeline-track:hover {
+    background-color: theme('colors.flick.secondary');
+  }
+}

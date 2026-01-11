@@ -1,0 +1,21 @@
+/* Force LivePlayer to fill container */
+.video-playback-wrapper > div:first-child {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.video-playback-wrapper > div:first-child > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.video-playback-wrapper > div:first-child > div > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.video-playback-wrapper twick-player {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}
