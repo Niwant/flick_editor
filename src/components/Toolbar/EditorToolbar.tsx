@@ -63,6 +63,24 @@ export function EditorToolbar() {
     { id: 'erase', label: 'Erase', value: { name: 'erase', bufferTime: 0.1 } },
     { id: 'elastic', label: 'Elastic', value: { name: 'elastic' } },
   ]
+  const filterOptions = [
+    { id: 'none', label: 'None', value: null },
+    { id: 'saturated', label: 'Saturated', value: 'saturated' },
+    { id: 'bright', label: 'Bright', value: 'bright' },
+    { id: 'vibrant', label: 'Vibrant', value: 'vibrant' },
+    { id: 'retro', label: 'Retro', value: 'retro' },
+    { id: 'blackWhite', label: 'Black & White', value: 'blackWhite' },
+    { id: 'cool', label: 'Cool', value: 'cool' },
+    { id: 'warm', label: 'Warm', value: 'warm' },
+    { id: 'cinematic', label: 'Cinematic', value: 'cinematic' },
+    { id: 'softGlow', label: 'Soft Glow', value: 'softGlow' },
+    { id: 'moody', label: 'Moody', value: 'moody' },
+    { id: 'dreamy', label: 'Dreamy', value: 'dreamy' },
+    { id: 'inverted', label: 'Inverted', value: 'inverted' },
+    { id: 'vintage', label: 'Vintage', value: 'vintage' },
+    { id: 'dramatic', label: 'Dramatic', value: 'dramatic' },
+    { id: 'faded', label: 'Faded', value: 'faded' },
+  ]
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || [])
@@ -254,7 +272,7 @@ export function EditorToolbar() {
     }
   }
 
-  const setSelectedClipProperty = (key: 'animation' | 'textEffect', value: any) => {
+  const setSelectedClipProperty = (key: 'animation' | 'textEffect' | 'mediaFilter', value: any) => {
     if (!selectedClip || !selectedTrack) return
     const nextProperties = { ...(selectedClip.properties || {}) }
     if (value) {
@@ -484,6 +502,25 @@ export function EditorToolbar() {
                     ))}
                   </select>
                 </div>
+                {(selectedClip.type === 'video' || selectedClip.type === 'image') && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-flick-text-muted">Filter</span>
+                    <select
+                      value={selectedClip.properties?.mediaFilter || 'none'}
+                      onChange={(e) => {
+                        const option = filterOptions.find(item => item.id === e.target.value)
+                        setSelectedClipProperty('mediaFilter', option?.value || null)
+                      }}
+                      className="px-2 py-1 bg-flick-primary border border-flick-border rounded text-xs text-flick-text"
+                    >
+                      {filterOptions.map((option) => (
+                        <option key={option.id} value={option.id}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
                 {selectedClip.type === 'text' && (
                   <div className="flex items-center gap-2">
                     <span className="text-flick-text-muted">Text</span>
