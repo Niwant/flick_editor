@@ -50,7 +50,7 @@ export function CanvasView() {
   
   const handleOpenEditor = () => {
     const store = useEditorStore.getState()
-    
+
     // Extract flows from the canvas
     const flows = extractFlows(store.nodes, store.connections)
     
@@ -110,7 +110,10 @@ export function CanvasView() {
         store.removeTrack(oldTrack.id)
       }
     }
-    
+
+    // Ensure playback is stopped when entering the editor
+    store.setIsPlaying(false)
+
     // Switch to editor view
     setViewMode('editor')
   }

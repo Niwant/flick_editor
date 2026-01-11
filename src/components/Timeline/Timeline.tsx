@@ -52,10 +52,16 @@ export function Timeline() {
   // Handle clip drag
   const handleClipMouseDown = (e: React.MouseEvent, trackId: string, clipId: string) => {
     e.stopPropagation()
-    e.preventDefault() // Prevent default drag behavior
-    const isAdditive = e.shiftKey || e.metaKey || e.ctrlKey
+    const isAdditive = e.metaKey || e.ctrlKey || e.shiftKey
     const clip = tracks.find(t => t.id === trackId)?.clips.find(c => c.id === clipId)
     if (!clip) return
+
+    if (isAdditive) {
+      toggleClipSelection(clipId)
+      return
+    }
+
+    e.preventDefault() // Prevent default drag behavior
 
     const clipElement = e.currentTarget as HTMLElement
     const rect = clipElement.getBoundingClientRect()
@@ -63,9 +69,7 @@ export function Timeline() {
     const offset = clickX / pixelsPerSecond
 
     setDraggedClip({ trackId, clipId, offset })
-    if (isAdditive) {
-      toggleClipSelection(clipId)
-    } else if (!selectedClipIds.includes(clipId)) {
+    if (!selectedClipIds.includes(clipId)) {
       selectClip(clipId)
     }
 
@@ -253,7 +257,7 @@ export function Timeline() {
                       onClick={(e) => {
                         e.stopPropagation()
                         if (!draggedClip) {
-                          if (e.shiftKey || e.metaKey || e.ctrlKey) {
+                          if (e.metaKey || e.ctrlKey || e.shiftKey) {
                             toggleClipSelection(clip.id)
                           } else {
                             selectClip(clip.id)
